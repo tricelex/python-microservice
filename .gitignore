@@ -292,3 +292,6 @@ cython_debug/
 *.pyc
 admin/.dbdata/*
 main/.dbdata/*
+react-crud/.idea/*
+react-crud/node_modules/
+react-crud/node_modules/*
