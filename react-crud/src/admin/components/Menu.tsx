@@ -6,9 +6,9 @@ const Menu = () => {
             <div className="sidebar-sticky">
                 <ul className="nav flex-column">
                     <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="#">
+                        <button className="nav-link active" aria-current="page">
                             Products
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </div>

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Wrapper from "./Wrapper";
 import {Product} from "../interfaces/product";
+import { Link } from 'react-router-dom';
 
 const Products = () => {
     const [products, setProduct] = useState([])
@@ -17,21 +18,26 @@ const Products = () => {
         )();
     }, []);
 
+    const del = async (id: number) => {
+        if (window.confirm('Are you sure you want to delete this product')) {
+            await fetch(`http://localhost:8000/api/products/${id}`, {
+                method: 'DELETE'
+            });
+            setProduct(products.filter(
+                (p: Product) => p.id !== id
+            ));
+        }
+
+
+    }
+
     return (
         <Wrapper>
 
-            <div
-                className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 className="h2">Dashboard</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <div className="btn-group mr-2">
-                        <button className="btn btn-sm btn-outline-secondary">Share</button>
-                        <button className="btn btn-sm btn-outline-secondary">Export</button>
-                    </div>
-                    <button className="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        <span data-feather="calendar"></span>
-                        This week
-                    </button>
+            <div className='pt-3 pb-2 mb-3 border-bottom'>
+                <div className='btn-toolbar mb-2 mb-md-0'>
+                    {/* eslint-disable-next-line react/jsx-no-undef */}
+                    <Link to='/admin/products/create' className='btn btn-sm btn-outline-secondary'>Add</Link>
                 </div>
             </div>
 
@@ -52,10 +58,16 @@ const Products = () => {
                         return (
                             <tr key={p.id}>
                                 <td>{p.id}</td>
-                                <td><img src={p.image} height='100'/></td>
+                                <td><img src={p.image} height='100' alt='{p.title}'/></td>
                                 <td>{p.title}</td>
                                 <td>{p.likes}</td>
-                                <td></td>
+                                <td>
+                                    <div className='btn-group mr-2'>
+                                        <a href="#" className='btn btn-sm btn-outline-secondary'
+                                           onClick={() => del(p.id)}
+                                        >Delete</a>
+                                    </div>
+                                </td>
                             </tr>
                         )
                     })}
