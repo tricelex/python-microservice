@@ -18,7 +18,6 @@ def callback(ch, method, properties, body):
     print('Received in main')
     data = json.loads(body)
     print(data)
-
     if properties.content_type == 'product_created':
         product = Product(id=data['id'], title=data['title'], image=data['image'])
         db.session.add(product)
